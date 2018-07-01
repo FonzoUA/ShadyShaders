@@ -43,9 +43,6 @@
 			{
 				//fixed4 col = tex2D(_MainTex, i.uv);
 				fixed4 col = tex2D(_MainTex, i.uv + float2(0, sin(i.vertex.x/50 + _Time[2]*0.5f) / 100));
-				col.r = col.r - 0.4f;
-				col.b = col.b - 0.23f;
-				col.g = col.g - 0.45;
 				return col;
 			}
 			ENDCG

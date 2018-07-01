@@ -47,7 +47,7 @@
 
 			fixed4 fragmentFunction(v2f IN) : SV_Target
 			{
-				fixed4 col = tex2D(_MainTexture, IN.uv + float2(0, sin(IN.vertex.x*0.05f + _Time[1]*0.5f) * 0.001f));
+				fixed4 col = tex2D(_MainTexture, IN.uv + float2(0, sin(IN.vertex.x/50 + _Time[1]*0.5f) / 20));
 				return col;
 			}
 

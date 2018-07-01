@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: ImageEffectTes2
-  m_Shader: {fileID: 4800000, guid: fb22243725dc70544bfc32357c2c4004, type: 3}
+  m_Name: Holoshader
+  m_Shader: {fileID: 4800000, guid: e57a35008d3fd744fb6fbde4edd0c13f, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -43,7 +43,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 49744b7e8c4940a4e8016b3f7e937854, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexture:
@@ -63,27 +63,31 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BlueFloat: 0.43
+    - _Amount: 0.33
+    - _Amplitude: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _CutoutThresh: 0.34
     - _DetailNormalMapScale: 1
     - _DissolveAmount: 1
+    - _Distance: 1
     - _DstBlend: 0
     - _ExtrudeAmount: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _GreenFloat: 0.09
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RedFloat: 0.44
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _Speed: 1
     - _SrcBlend: 1
+    - _Transparency: 0.3
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0, g: 0.9210737, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _TintColor: {r: 0, g: 0.9367821, b: 1, a: 1}

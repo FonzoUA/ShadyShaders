@@ -49,10 +49,11 @@
 			{
 				//fixed4 col = tex2D(_MainTex, i.uv);
 				fixed4 col = tex2D(_MainTex, i.uv);
-				float3 modColor = (_RedFloat, _GreenFloat, _BlueFloat);
-				col.r = col.r * modColor.r;
-				col.b = col.b * modColor.b;
-				col.g = col.g * modColor.g;
+				
+
+				col.r = col.r - _RedFloat;
+				col.g = col.g - _GreenFloat;
+				col.b = col.b - _BlueFloat;
 
 				return col;
 			}
