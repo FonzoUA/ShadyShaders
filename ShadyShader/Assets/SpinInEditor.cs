@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SpinInEditor : MonoBehaviour
 {
-
+    public bool useDissolve = false;
     public float speed = 1.0f;
+    public Vector3 SpinVector;
     private Transform t;
 
     private void Start()
@@ -15,7 +16,12 @@ public class SpinInEditor : MonoBehaviour
 
     void Update ()
     {
-
-        t.Rotate(0, 0, speed * Time.deltaTime);
+        if (!useDissolve)
+            t.Rotate(SpinVector * (speed * Time.deltaTime));
+        else
+        {
+            if (GameManager.Instance.GetDissolveValue() < 1.01f)
+                t.Rotate(SpinVector * ((1 - GameManager.Instance.GetDissolveValue()) * (speed * Time.deltaTime)));
+        }
 	}
 }

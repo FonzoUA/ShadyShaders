@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Glass_Tile
+  m_Shader: {fileID: 4800000, guid: 36876da2643b08642b919ab2238f4d0a, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AltTex:
+        m_Texture: {fileID: 2800000, guid: 0c51f1ca54e973b42aa4bb629ec9b487, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 6a1e788344afbcb45b18f5e4f3874789, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: -0.19, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 2800000, guid: 77eff51a168e0144da1f7d20721b1a4c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _CutoutThresh: 1.01056
+    - _DebugNum: 0
+    m_Colors:
+    - _Color: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
