@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnCubes : PersistableObject
+public class Game : PersistableObject
 {
-
-    public PersistableObject prefab;
+    public ShapeFactory shapeFactory;
+    
     public KeyCode createKey = KeyCode.C;
     public KeyCode resetKey = KeyCode.R;
     public KeyCode saveKey = KeyCode.F5;
@@ -13,12 +13,14 @@ public class SpawnCubes : PersistableObject
 
     public float spawnRadius = 5.0f;
 
-    private PersistableObject tempObj;
+    const int saveVersion = 1;
+
+    private Shape tempObj;
     private Transform tempTrans;
-    private List<PersistableObject> objects;
+    private List<Shape> shapes;
     private void Awake()
     {
-        objects = new List<PersistableObject>();
+        shapes = new List<Shape>();
     }
 
     private void Update()
@@ -44,40 +46,50 @@ public class SpawnCubes : PersistableObject
 
     private void CreateObject()
     {
-        tempObj = Instantiate(prefab);
+        tempObj = shapeFactory.GetRandom();
         tempTrans = tempObj.transform;
         tempTrans.localPosition = Random.insideUnitSphere * spawnRadius;
         tempTrans.localRotation = Random.rotation;
         tempTrans.localScale = Vector3.one * Random.Range(0.3f, 1.5f);
 
-        objects.Add(tempObj);
+        shapes.Add(tempObj);
     }
 
     private void ResetLevel()
     {
-        for (int i = 0; i < objects.Count; i++)
+        for (int i = 0; i < shapes.Count; i++)
         {
-            Destroy(objects[i].gameObject);
+            Destroy(shapes[i].gameObject);
         }
-        objects.Clear();
+        shapes.Clear();
     }
 
     public override void Save(GameDataWriter writer)
     {
-        writer.Write(objects.Count);
-        for (int i = 0; i < objects.Count; i++)
+        writer.Write(-saveVersion);
+        writer.Write(shapes.Count);
+        for (int i = 0; i < shapes.Count; i++)
         {
-            objects[i].Save(writer);
+            writer.Write(shapes[i].ShapeID);
+            shapes[i].Save(writer);
         }
     }
     public override void Load(GameDataReader reader)
     {
-        int count = reader.ReadInt();
+        int version = -reader.ReadInt();
+        if (version > saveVersion)
+        {
+            Debug.LogError("Unsupported future save versions " + version);
+            return;
+        }
+        //          condition    ?  TRUEresult : FALSEresult;
+        int count = version <= 0 ? -version : reader.ReadInt();
         for (int i = 0; i < count; i++)
         {
-            PersistableObject o = Instantiate(prefab);
+            int shapeId = version > 0 ? reader.ReadInt() : 0;
+            Shape o = shapeFactory.Get(shapeId);
             o.Load(reader);
-            objects.Add(o);
+            shapes.Add(o);
         }
     }
 }

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 23917279425234184}
   - component: {fileID: 114558437270801832}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: SpikedBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,7 +57,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: ff8d2cb70b486cc4888aea1978c72d88, type: 2}
+  - {fileID: 2100000, guid: 79dee3f65e7578a41b786692d3acb01f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,7 +83,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1669463079799534}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300002, guid: c455996f6e6b49d418895f41b5216202, type: 3}
 --- !u!114 &114558437270801832
 MonoBehaviour:
   m_ObjectHideFlags: 1
