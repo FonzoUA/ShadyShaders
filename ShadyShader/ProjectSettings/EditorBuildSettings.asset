@@ -6,6 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/SampleCodes/Persistence Thingy/PersistenceThingy.unity
+    guid: cf61a8d80996c4f4f96311f228efe0c1
+  - enabled: 1
+    path: Assets/SampleCodes/Persistence Thingy/PersistenceExtra.unity
+    guid: e8331e2c9d529914d8f1f9eb37726eff
+  - enabled: 1
+    path: Assets/SampleCodes/Persistence Thingy/PersistenceExtraTwo.unity
+    guid: dbf6169e602c9b7478453e6aa09b955f
+  - enabled: 1
     path: Assets/SampleCodes/FPS Thingy/FPS Thingy.unity
     guid: e02a1f7bdd017bc4981fcece81df69bb
   m_configObjects: {}
