@@ -7,17 +7,22 @@ public class Game : PersistableObject
     public ShapeFactory shapeFactory;
     
     public KeyCode createKey = KeyCode.C;
+    public KeyCode destroyKey = KeyCode.X;
     public KeyCode resetKey = KeyCode.R;
     public KeyCode saveKey = KeyCode.F5;
     public KeyCode loadKey = KeyCode.F9;
 
     public float spawnRadius = 5.0f;
+    public float creationSpeed { get; set; }
+    public float destructionSpeed { get; set; }
 
     const int saveVersion = 1;
 
     private Shape tempObj;
     private Transform tempTrans;
     private List<Shape> shapes;
+    private float creationProcess;
+    private float destructionProcess;
     private void Awake()
     {
         shapes = new List<Shape>();
@@ -25,6 +30,19 @@ public class Game : PersistableObject
 
     private void Update()
     {
+        creationProcess += Time.deltaTime * creationSpeed;
+        destructionProcess += Time.deltaTime * destructionSpeed;
+        while (creationProcess >= 1f)
+        {
+            creationProcess -= 1f;
+            CreateObject();
+        }
+        while (destructionProcess >= 1f)
+        {
+            destructionProcess -= 1f;
+            DestroyShape();
+        }
+
         if (Input.GetKeyDown(createKey))
         {
             CreateObject();
@@ -41,6 +59,10 @@ public class Game : PersistableObject
         {
             ResetLevel();
             PersistableStorage.Instance.Load(this);
+        }
+        else if (Input.GetKeyDown(destroyKey))
+        {
+            DestroyShape();
         }
     }
 
@@ -59,7 +81,7 @@ public class Game : PersistableObject
     {
         for (int i = 0; i < shapes.Count; i++)
         {
-            Destroy(shapes[i].gameObject);
+            shapeFactory.ReturnShape(shapes[i]);
         }
         shapes.Clear();
     }
@@ -92,5 +114,16 @@ public class Game : PersistableObject
             o.Load(reader);
             shapes.Add(o);
         }
+    }
+
+    private void DestroyShape()
+    {
+        if (shapes.Count <= 0)
+            return;
+        int index = Random.Range(0, shapes.Count);
+        shapeFactory.ReturnShape(shapes[index]);
+        int lastIndex = shapes.Count - 1;
+        shapes[index] = shapes[lastIndex];
+        shapes.RemoveAt(lastIndex);
     }
 }
