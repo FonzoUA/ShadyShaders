@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Game : PersistableObject
 {
     public ShapeFactory shapeFactory;
+    public SpawnParticlesController particles;
     
     public KeyCode createKey = KeyCode.C;
     public KeyCode destroyKey = KeyCode.X;
@@ -103,6 +104,8 @@ public class Game : PersistableObject
         tempTrans.localScale = Vector3.one * Random.Range(0.3f, 1.5f);
         tempObj.SetColor(Random.ColorHSV(0f, 1f, 0.5f, 1f, 0.25f, 1f, 1f, 1f));
         shapes.Add(tempObj);
+
+        particles.PlayParticles(tempTrans.localPosition, tempTrans.localScale.x * 0.5f);
     }
 
     private void ResetLevel()
