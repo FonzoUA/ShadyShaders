@@ -1,9 +1,17 @@
 fileFormatVersion: 2
 guid: 5ae1b6d4c894f9c449d33837a633a8ec
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
+    100000: SplitMetalBall
+    100002: //RootNode
+    400000: SplitMetalBall
+    400002: //RootNode
+    2300000: SplitMetalBall
+    3300000: SplitMetalBall
     4300000: SplitMetalBall
+    7400000: Default Take
+    11100000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -55,6 +63,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 0
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 1

@@ -1,10 +1,18 @@
 fileFormatVersion: 2
 guid: c455996f6e6b49d418895f41b5216202
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
+    100000: SpikeBall
+    100002: //RootNode
+    400000: SpikeBall
+    400002: //RootNode
+    2300000: SpikeBall
+    3300000: SpikeBall
     4300000: Sphere
     4300002: SpikeBall
+    7400000: Default Take
+    11100000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -56,6 +64,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 0
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

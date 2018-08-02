@@ -7,6 +7,7 @@ public class CubeSphere : MonoBehaviour
 {
     public int gridSize;
     public float radius = 1;
+    public bool vertsToCenterGenerationMethod = false;
 
     private Mesh mesh;
     private Vector3[] verts;
@@ -227,10 +228,33 @@ public class CubeSphere : MonoBehaviour
 
     private void SetVertex(int i, int x, int y, int z)
     {
-        Vector3 v = new Vector3(x, y, z) * 2f / gridSize - Vector3.one;
-        normals[i] = v.normalized;
-        verts[i] = normals[i] * radius;
-        cubeUV[i] = new Color32((byte)x, (byte)y, (byte)z, 0);
+        if (!vertsToCenterGenerationMethod)
+        {
+            // Pushes points away from the diagonal towards the axes
+            Vector3 v = new Vector3(x, y, z) * 2f / gridSize - Vector3.one;
+
+            float x2 = v.x * v.x;
+            float y2 = v.y * v.y;
+            float z2 = v.z * v.z;
+
+            Vector3 s;
+
+            s.x = v.x * Mathf.Sqrt(1f - y2 / 2f - z2 / 2f + y2 * z2 / 3f);
+            s.y = v.y * Mathf.Sqrt(1f - x2 / 2f - z2 / 2f + x2 * z2 / 3f);
+            s.z = v.z * Mathf.Sqrt(1f - x2 / 2f - y2 / 2f + x2 * y2 / 3f);
+
+            normals[i] = s;
+            verts[i] = normals[i] * radius;
+            cubeUV[i] = new Color32((byte)x, (byte)y, (byte)z, 0);
+        }
+        else
+        {
+            // Pulls the vertices straight to the center
+            Vector3 v = new Vector3(x, y, z) * 2f / gridSize - Vector3.one;
+            normals[i] = v.normalized;
+            verts[i] = normals[i] * radius;
+            cubeUV[i] = new Color32((byte)x, (byte)y, (byte)z, 0);
+        }
     }
 
     //private void OnDrawGizmos()

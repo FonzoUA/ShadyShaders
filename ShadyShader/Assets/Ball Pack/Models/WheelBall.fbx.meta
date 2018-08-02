@@ -1,9 +1,17 @@
 fileFormatVersion: 2
 guid: 74cbada03bcd41d49acec56746acf71e
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
+    100000: WheelBall
+    100002: //RootNode
+    400000: WheelBall
+    400002: //RootNode
+    2300000: WheelBall
+    3300000: WheelBall
     4300000: WheelBall
+    7400000: Default Take
+    11100000: //RootNode
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -55,6 +63,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 0
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
