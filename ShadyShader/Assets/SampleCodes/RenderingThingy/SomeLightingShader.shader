@@ -47,8 +47,14 @@
 			#pragma fragment FragProg
 			// make sure we are using at least shader level 3.0
 			#pragma target 3.0 		
+			
 			// We need to let the shader know that its dealing with point light
-				#define POINT
+			//#define POINT
+			// Since we can have multiple types of light, we define different variants
+			// for each of these keywords. Each variant is a separate shader that is compiled 
+			// individually (only differenciated by the keywords defininng them)
+			#pragma multi_compile DIRECTIONAL DIRECTIONAL_COOKIE POINT SPOT
+
 			#include "MultiLightShader.cginc"
 
 			ENDCG

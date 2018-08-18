@@ -57,7 +57,11 @@ UnityLight CreateLight (Interpolators i)
 float4 FragProg (Interpolators i) : SV_TARGET0
 {
 	i.normal = normalize(i.normal);
-	float3 viewDir = normalize(_WorldSpaceCameraPos - i.worldPos); // _WorldSpaceCameraPos is a UnityShaderVariables variable that returns the position of the camera
+	#if defined(POINT) || defined(SPOT)
+	float3 viewDir = normalize(_WorldSpaceCameraPos -	i.worldPos); // _WorldSpaceCameraPos is a UnityShaderVariables variable that returns the position of the camera
+	#else
+	float3 viewDir = _WorldSpaceLightPos0.xyz; // we have directional light and thus _WorldSpaceLightPos0 is the direction
+	#endif
 	//float3 lightDir = _WorldSpaceLightPos0.xyz; // _WorldSpaceLightPos0 is a UnityShaderVariables variable that 
 	//											// contains the position of the current light
 	//float3 lightColor = _LightColor0.rgb;		// Get light source's color
