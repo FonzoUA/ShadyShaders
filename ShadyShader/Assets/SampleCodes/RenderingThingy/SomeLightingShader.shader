@@ -17,12 +17,16 @@
 
 			CGPROGRAM
 
-			#pragma vertex VertProg
-			#pragma fragment FragProg
 			// make sure we are using at least shader level 3.0
 			#pragma target 3.0 
 
-			
+			#pragma multi_compile _ VERTEXLIGHT_ON
+
+			#pragma vertex VertProg
+			#pragma fragment FragProg
+
+			#define FORWARD_BASE_PASS
+
 			#include "MultiLightShader.cginc"
 			ENDCG
 		}
@@ -43,8 +47,6 @@
 			ZWrite Off
 
 			CGPROGRAM
-			#pragma vertex VertProg
-			#pragma fragment FragProg
 			// make sure we are using at least shader level 3.0
 			#pragma target 3.0 		
 			
@@ -55,6 +57,9 @@
 			// individually (only differenciated by the keywords defininng them)
 			#pragma multi_compile DIRECTIONAL DIRECTIONAL_COOKIE POINT SPOT
 
+			#pragma vertex VertProg
+			#pragma fragment FragProg
+			
 			#include "MultiLightShader.cginc"
 
 			ENDCG

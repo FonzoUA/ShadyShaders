@@ -24,9 +24,24 @@ struct Interpolators
 	float2 uv : TEXCOORD0;
 	float3 normal : TEXCOORD1;
 	float3 worldPos : TEXCOORD2; 
+
+	#if defined(VERTEXLIGHT_ON)
+		float3 vertexLightColor : TEXCOORD3;
+	#endif
 };
 
 
+
+void ComputeVertexLightColor (inout Interpolators i) {
+	#if defined(VERTEXLIGHT_ON)
+		i.vertexLightColor = Shade4PointLights(
+			unity_4LightPosX0, unity_4LightPosY0, unity_4LightPosZ0,
+			unity_LightColor[0].rgb, unity_LightColor[1].rgb,
+			unity_LightColor[2].rgb, unity_LightColor[3].rgb,
+			unity_4LightAtten0, i.worldPos, i.normal
+		);
+	#endif
+}
 
 
 Interpolators VertProg (VertexData v) 
@@ -39,29 +54,62 @@ Interpolators VertProg (VertexData v)
 	return i;
 }
 
-UnityLight CreateLight (Interpolators i)
-{
+//UnityLight CreateLight (Interpolators i)
+//{
+//	UnityLight light;
+//	light.dir = normalize(_WorldSpaceLightPos0.xyz - i.worldPos); // _WorldSpaceLightPos0 holds the current light's POSITION
+//										// in case with directional light it holds direction towards the light
+//										// but if we are using point light, we need to compute light direction
+//										// by subtracting fragment's world position and normalizing result
+//	//float3 lightVec = _WorldSpaceLightPos0.xyz - i.worldPos; // calculate light attenuation
+//	//float attenuation = 1 / (1 + dot(lightVec, lightVec));
+//	UNITY_LIGHT_ATTENUATION(attenuation, 0, i.worldPos);
+//	light.color = _LightColor0.rgb * attenuation;
+//	light.ndotl = DotClamped(i.normal, light.dir);
+//	return light;
+//}
+
+
+UnityLight CreateLight (Interpolators i) {
 	UnityLight light;
-	light.dir = normalize(_WorldSpaceLightPos0.xyz - i.worldPos); // _WorldSpaceLightPos0 holds the current light's POSITION
-										// in case with directional light it holds direction towards the light
-										// but if we are using point light, we need to compute light direction
-										// by subtracting fragment's world position and normalizing result
-	//float3 lightVec = _WorldSpaceLightPos0.xyz - i.worldPos; // calculate light attenuation
-	//float attenuation = 1 / (1 + dot(lightVec, lightVec));
+
+	#if defined(POINT) || defined(POINT_COOKIE) || defined(SPOT)
+		light.dir = normalize(_WorldSpaceLightPos0.xyz - i.worldPos);
+	#else
+		light.dir = _WorldSpaceLightPos0.xyz;
+	#endif
+	
 	UNITY_LIGHT_ATTENUATION(attenuation, 0, i.worldPos);
 	light.color = _LightColor0.rgb * attenuation;
 	light.ndotl = DotClamped(i.normal, light.dir);
 	return light;
 }
 
+
+UnityIndirect CreateIndirectLight (Interpolators i) {
+	UnityIndirect indirectLight;
+	indirectLight.diffuse = 0;
+	indirectLight.specular = 0;
+
+	#if defined(VERTEXLIGHT_ON)
+		indirectLight.diffuse = i.vertexLightColor;
+	#endif
+
+	#if defined(FORWARD_BASE_PASS)
+		indirectLight.diffuse += max(0, ShadeSH9(float4(i.normal, 1)));
+	#endif
+
+	return indirectLight;
+}
+
+
 float4 FragProg (Interpolators i) : SV_TARGET0
 {
 	i.normal = normalize(i.normal);
-	#if defined(POINT) || defined(SPOT)
+	
 	float3 viewDir = normalize(_WorldSpaceCameraPos -	i.worldPos); // _WorldSpaceCameraPos is a UnityShaderVariables variable that returns the position of the camera
-	#else
-	float3 viewDir = _WorldSpaceLightPos0.xyz; // we have directional light and thus _WorldSpaceLightPos0 is the direction
-	#endif
+
+	//float3 viewDir = _WorldSpaceLightPos0.xyz; // if we have directional light, the  _WorldSpaceLightPos0 is the direction
 	//float3 lightDir = _WorldSpaceLightPos0.xyz; // _WorldSpaceLightPos0 is a UnityShaderVariables variable that 
 	//											// contains the position of the current light
 	//float3 lightColor = _LightColor0.rgb;		// Get light source's color
@@ -84,9 +132,6 @@ float4 FragProg (Interpolators i) : SV_TARGET0
 	//light.dir = lightDir;
 	//light.ndotl = DotClamped(i.normal, lightDir);
 
-	UnityIndirect indirectLight;
-	indirectLight.diffuse = 0;
-	indirectLight.specular = 0;
 	// Parameters: 1 - diffuse color; 2 - specular color; 3 - reflectivity; 4 - roughness; 5 - surface normal; 6 - View Direction, 7 - Direct light; 8 - Indirect Light
 	//return UNITY_BRDF_PBS(albedo, specularTint, oneMinusReflectivity, _Smoothness, i.normal, viewDir, light, indirectLight );
 	return UNITY_BRDF_PBS(albedo, 
@@ -96,7 +141,7 @@ float4 FragProg (Interpolators i) : SV_TARGET0
 		i.normal, 
 		viewDir, 
 		CreateLight(i), 
-		indirectLight );
+		CreateIndirectLight(i) );
 }
 
 #endif
